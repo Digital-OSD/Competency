@@ -13,3 +13,6 @@ PROGRESS: this content revision uses a new game-progress key to avoid mixing old
 EMAIL: JSON downloads locally. The email link opens the default email app; attach the file manually before sending.
 
 Workbook and original uploaded files remain unchanged; audited workbook is supplied separately. Product details follow the user's supplied training baseline, not a new platform verification.
+
+
+v6.4: All roles have a 630-point participation maximum. Account Manager: 42 per mission (15); Inside Sales: 35 (18); Counter Sales: 45 (14). Points remain independent of correctness. Replays add no duplicate points. Andrew Kenny: Northern CA / Digital Specialist, manually assigned 730, no tags. Earlier completed local board records display 630; their original exported JSON is not modified. New exports include maximumParticipationPoints and pointsPerMission. Questions and accuracy weights unchanged.

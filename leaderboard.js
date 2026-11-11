@@ -1,2 +1,2 @@
-// No published finishers. New completions are saved locally in the browser.
-const PUBLISHED_FINISHERS=[];
+// Andrew is a manually assigned arcade entry, not an earned completion result.
+const PUBLISHED_FINISHERS=[{"runId": "andrew-kenny-manual-entry", "firstName": "Andrew", "lastName": "Kenny", "location": "Northern CA", "role": "Digital Specialist", "roleKey": "host", "isHost": true, "participationPoints": 730, "tags": []}];
