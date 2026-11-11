@@ -48,7 +48,5 @@ body{background:#002F6C}.app{background:linear-gradient(135deg,#002F6C 0%,#00358
 .character-card .blue[data-role]:hover,.character-card .blue[data-role]:focus-visible{background:#DA291C;color:#fff;box-shadow:0 4px 0 #971B2F,0 0 18px rgba(218,41,28,.45);transform:translateY(-2px)}
 .character-card .blue[data-role]:active{background:#971B2F;transform:translateY(0);box-shadow:0 2px 0 #002F6C}
 
-/* v7.6: uniform powered windows and centered facade geometry. */
-.branch-windows{grid-template-columns:repeat(3,minmax(0,1fr))}
-.branch-window.lit,.fully-powered .branch-window{background:#009FDF;border-color:#0067B9}
-.branch-door{left:50%;transform:translateX(-50%);width:13%}
+.branch-windows{grid-template-columns:repeat(3,minmax(0,1fr))}.branch-window.lit,.fully-powered .branch-window{background:#009FDF;border-color:#0067B9}.branch-door{left:50%;transform:translateX(-50%);width:13%}
+.character-card .blue[data-role]:hover,.character-card .blue[data-role]:focus-visible{background:#DA291C;color:#fff;box-shadow:0 4px 0 #971B2F,0 0 18px rgba(218,41,28,.45)}

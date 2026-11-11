@@ -1,19 +1,17 @@
-Digital Competency 2027 v7.0
-Upload ZIP contents to GitHub Pages; open standalone.html for local preview.
-All roles: 1,000 maximum points. Participation contributes 100 and category-weighted first-attempt correctness contributes 900. Totals rounded to whole points. Written pitch remains ungraded. Replays do not change points or accuracy, only branch power. Mission badge shows rounded potential first-attempt points; sum of individually rounded badges can differ from the final total because totals are rounded once.
-Removed all mission category/game-type tags and Field Guide controls. Post-answer explanations remain.
-Andrew manual entry: 1,100, 100 above maximum. Older local board scoring versions hidden rather than mixed; resume and finish/export to publish recalculated score. Saved first answers retained.
-
-
-v7.1: Removed all point-potential badges from mission panel. Integrated unchanged official logo into a rounded facade sign beneath the red canopy. Responsive thick feeder cable connects panel to branch; blue energy accent appears after a breaker clears. Score and question behavior unchanged.
-
-
-v7.2: Counter Sales weights changed to DJC 10%, Website 80%, SOA 10%. Other role weights and all questions unchanged.
-
-
-v7.3: Play-page character-style role cards with electrical role symbols, descriptions, digital attribute bars showing unchanged training weights and signature moves. Journey headline updated. Attributes are role training weights, not assessments of individuals. Game content and scoring unchanged.
-
-
-v7.5: Removed the three role-description sentences from the character cards. Electrical symbols, class titles, attribute bars and signature moves unchanged.
-
-v7.6: Removed footer and final-result pitch display. Uniform blue powered windows and centered door in both branch views. Pitch mission and JSON export retained.
+Digital Competency 2027 v7.7 - Supabase pilot
+Built from supplied v7.5 source with v7.6 footer/pitch/branch fixes reapplied.
+1. Create a dedicated Supabase project. Obtain approval before using real associate data.
+2. Run supabase-setup.sql once in SQL Editor.
+3. Enable Anonymous Sign-Ins in Authentication settings.
+4. Edit supabase-config.js: enabled true, project URL, publishable key only.
+5. Upload website files to GitHub Pages. SQL/README need not be published.
+6. Test completion on one device and leaderboard on another.
+The GitHub account connection alone does not configure this game.
+30-second polling, not Supabase Realtime. SDK loaded from CDN; internet required for cloud sync.
+Standalone preview has embedded config: edit it separately or use hosted index.html.
+Anonymous users are not verified employees. Anyone able to create an anonymous session can read names and scores and submit their own rows. Use test aliases until approved; add verified authentication and abuse controls before restricted production use.
+Scores are client supplied, not server verified. Run IDs prevent retry duplicates, not repeat players/new runs.
+Existing historical local entries are not automatically uploaded. Completing or viewing final results queues the current run.
+Local/published host entries remain visible; cloud rows override same run IDs. Host 1100-point entry stays local/published, not submitted.
+Pending retries require browser data and the game to be open. Clearing browser data can lose pending results.
+Syntax and mock integration checks only; no live project credentials available for end-to-end verification.
