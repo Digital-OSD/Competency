@@ -1,12 +1,14 @@
-// Digital Competency 2027 v7.8 - Supabase live leaderboard (only permanent store).
-// The browser keeps nothing except unsent results waiting to retry.
+// Digital Competency 2027 v7.9 - Supabase live leaderboard + private answer capture.
+// Summary and per-question answers are saved together in ONE database call (submit_run),
+// so a result is never stored without its answers. The browser keeps only unsent results.
 const LiveBoard=(()=>{
-  const GAME_VERSION='7.8',SCORING_VERSION='7.0',QUEUE='dc2027-live-pending-v1';
+  const GAME_VERSION='7.9',SCORING_VERSION='7.0',QUEUE='dc2027-live-pending-v2';
   const cfg=window.SUPABASE_CONFIG||{},enabled=cfg.enabled===true;
   let client=null,busy=false,loading=false,loaded=false,rows=[],lastRead=0,failed=false;
   let message=enabled?'Connecting to the live leaderboard…':'Live leaderboard is not configured.';
   const saved=new Set();
 
+  try{localStorage.removeItem('dc2027-live-pending-v1')}catch{} // v7.8 queue format (no answers)
   function readQueue(){try{const q=JSON.parse(localStorage.getItem(QUEUE)||'{}');return q&&typeof q==='object'?q:{}}catch{return {}}}
   let pending=readQueue();
   function writeQueue(){try{Object.keys(pending).length?localStorage.setItem(QUEUE,JSON.stringify(pending)):localStorage.removeItem(QUEUE)}catch{}}
@@ -36,16 +38,11 @@ const LiveBoard=(()=>{
     busy=true;message='Saving your result…';paint();
     try{
       const c=await connect();
-      const {data:{user},error:authError}=await c.auth.getUser();
-      if(authError)throw authError;
-      for(const [id,r] of Object.entries(pending)){
-        const payload={run_id:id,user_id:user.id,first_name:r.firstName,last_name:r.lastName,branch_number:r.branchNumber,role_key:r.roleKey,total_points:r.totalPoints,accuracy:r.accuracy,completed_at:r.completedAt,game_version:GAME_VERSION,scoring_version:SCORING_VERSION};
-        const {error}=await c.from('game_results').insert(payload);
-        if(error){
-          if(error.code!=='23505')throw error; // 23505 = already saved by an earlier retry
-          const check=await c.from('game_results').select('run_id').eq('run_id',id).eq('user_id',user.id);
-          if(check.error||!check.data?.length)throw Error('duplicate run could not be verified');
-        }
+      for(const [id,item] of Object.entries(pending)){
+        const r=item.run;
+        const p_run={run_id:id,first_name:r.firstName,last_name:r.lastName,branch_number:r.branchNumber,role_key:r.roleKey,total_points:r.totalPoints,accuracy:r.accuracy,completed_at:r.completedAt,game_version:GAME_VERSION,scoring_version:SCORING_VERSION};
+        const {error}=await c.rpc('submit_run',{p_run,p_answers:item.answers});
+        if(error)throw error; // the function returns 'already_saved' for a retried run
         saved.add(id);delete pending[id];writeQueue();
       }
       failed=false;message='Result saved to the live leaderboard.';
@@ -55,10 +52,10 @@ const LiveBoard=(()=>{
     }finally{busy=false;paint()}
   }
 
-  function queue(r){
-    if(saved.has(r.runId)){paint();return}
+  function queue(run,answers){
+    if(saved.has(run.runId)){paint();return}
     if(!enabled){failed=true;message='Live leaderboard is not configured. Download a backup of your result.';paint();return}
-    pending[r.runId]=r;writeQueue();flush();
+    pending[run.runId]={run,answers};writeQueue();flush();
   }
 
   async function refresh(force=false){
@@ -85,7 +82,7 @@ const LiveBoard=(()=>{
 
   window.addEventListener('online',()=>{flush();refresh(true)});
   setInterval(()=>{if(!enabled)return;flush();if(typeof state!=='undefined'&&state.tab==='board')refresh(true)},30000);
-  setTimeout(flush,0); // retry anything left unsent from a previous visit
+  setTimeout(flush,0);
 
   return {queue,flush,refresh,paint,hasPending:()=>Object.keys(pending).length>0,get rows(){return rows},get loaded(){return loaded}};
 })();
