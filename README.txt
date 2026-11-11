@@ -1,15 +1,11 @@
-Digital Competency 2027 v6.5 - Power the Branch
-Extract and open standalone.html. For GitHub Pages, upload the contents with index.html at the configured site root.
-Equipment stations replace tropical islands: wire reels, conduit/fittings, junction boxes, panelboards, disconnects and luminaires. All stations remain unlocked; connections are decorative.
-Brand treatment: OneSource approved blue/red/gray palette, Arial substitute font, unchanged supplied logo on a white background with spacing. Equipment is illustrative UI, not a wiring diagram. No proprietary Gotham font bundled.
-Questions: 47 audited role assignments retained from v4.9 (15/18/14). Participation maximum remains 630, with 42/35/45 per mission. Andrew's manual 730-point entry retained without tags. Accuracy weights unchanged.
-Progress uses the v6.3 content key. Completion and export flow unchanged. Leaderboard is local to this browser, not shared live across devices. Email attachments must be added manually.
+Digital Competency 2027 v7.0
+Upload ZIP contents to GitHub Pages; open standalone.html for local preview.
+All roles: 1,000 maximum points. Participation contributes 100 and category-weighted first-attempt correctness contributes 900. Totals rounded to whole points. Written pitch remains ungraded. Replays do not change points or accuracy, only branch power. Mission badge shows rounded potential first-attempt points; sum of individually rounded badges can differ from the final total because totals are rounded once.
+Removed all mission category/game-type tags and Field Guide controls. Post-answer explanations remain.
+Andrew manual entry: 1,100, 100 above maximum. Older local board scoring versions hidden rather than mixed; resume and finish/export to publish recalculated score. Saved first answers retained.
 
 
-v6.6: Only DJC, Website and SOA categories. Inside Sales SOA subcategories combined at 70%. Counter website categories combined; 15% routing split equally between the project handoff (DJC) and general digital opportunity (Website): DJC 7.5%, Website 82.5%, SOA 10%. Main-page tagline removed. Questions and participation points unchanged.
+v7.1: Removed all point-potential badges from mission panel. Integrated unchanged official logo into a rounded facade sign beneath the red canopy. Responsive thick feeder cable connects panel to branch; blue energy accent appears after a breaker clears. Score and question behavior unchanged.
 
 
-v6.7: Clean breaker-panel mission selector. Cleared missions flip ON and illuminate a stylized branch. Final Nice Work screen reveals the fully illuminated branch. All missions remain selectable; scoring, categories, points and exports unchanged. Illustrative game UI, not electrical operating guidance.
-
-
-v6.8: More varied approved brand red/blue/gray palette throughout. Arcade board contrast restored. Supplied actual logo used on branch sign in preview and finish screen, unchanged on white. Questions, scoring, progress and completion flow unchanged.
+v7.2: Counter Sales weights changed to DJC 10%, Website 80%, SOA 10%. Other role weights and all questions unchanged.
