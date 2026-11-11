@@ -15,3 +15,5 @@ v7.3: Play-page character-style role cards with electrical role symbols, descrip
 
 
 v7.5: Removed the three role-description sentences from the character cards. Electrical symbols, class titles, attribute bars and signature moves unchanged.
+
+v7.6: Removed footer and final-result pitch display. Uniform blue powered windows and centered door in both branch views. Pitch mission and JSON export retained.
