@@ -1,17 +1,91 @@
+// Digital Competency 2027 v7.8 - Supabase live leaderboard (only permanent store).
+// The browser keeps nothing except unsent results waiting to retry.
 const LiveBoard=(()=>{
- const cfg=window.SUPABASE_CONFIG||{}, enabled=cfg.enabled===true;
- let client=null,busy=false,loading=false,rows=[],message=enabled?'Connecting to live storage...':'Local mode: Supabase is not configured.',lastRead=0;
- const storage='dc2027-live-pending-v1',saved='dc2027-live-saved-v1';
- const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'{}')}catch{return {}}};
- let pending=read(storage),confirmed=read(saved);
- function persist(){try{localStorage.setItem(storage,JSON.stringify(pending));localStorage.setItem(saved,JSON.stringify(confirmed))}catch{message='Keep this tab open: browser storage is unavailable.'}}
- function paint(){const el=document.getElementById('sync-status');if(el)el.textContent=typeof state!=='undefined'&&confirmed[state.run]?'Result saved to live leaderboard.':message;let b=document.getElementById('live-board-status');if(!b&&document.getElementById('board-rows')){b=document.createElement('p');b.id='live-board-status';b.setAttribute('role','status');document.getElementById('board-rows').before(b)}if(b)b.textContent=message}
- async function connect(){if(!enabled)throw Error('Local mode: add project settings and enable live storage.');if(!cfg.url||!cfg.publishableKey||!window.supabase)throw Error('Supabase settings or library missing.');if(!client)client=window.supabase.createClient(cfg.url,cfg.publishableKey);const {data,error}=await client.auth.getSession();if(error)throw error;if(!data.session){const result=await client.auth.signInAnonymously();if(result.error)throw result.error}return client}
- async function flush(){if(busy||!enabled)return;busy=true;try{const c=await connect();for(const [id,r] of Object.entries(pending)){message='Saving result...';paint();const {data:{user},error:authError}=await c.auth.getUser();if(authError)throw authError;const payload={run_id:id,user_id:user.id,first_name:r.firstName,last_name:r.lastName,branch_number:r.branchNumber,role_key:r.roleKey,total_points:r.totalPoints,accuracy:r.accuracy,completed_at:r.completedAt,game_version:'7.7',scoring_version:'7.0'};const {error}=await c.from('game_results').insert(payload);if(error){if(error.code!=='23505')throw error;const check=await c.from('game_results').select('run_id,user_id').eq('run_id',id).eq('user_id',user.id);if(check.error||!check.data?.length)throw Error('Duplicate run could not be verified.')}confirmed[id]=true;delete pending[id];persist();message='Result saved to live leaderboard.'}await refresh(true)}catch(e){message='Live save unavailable: '+e.message+'. Pending results retry automatically.'}finally{busy=false;paint()}}
- function queue(r){if(!enabled){paint();return}if(!confirmed[r.runId]){pending[r.runId]={...r,accuracy:score()};persist();flush()}else paint()}
- async function refresh(force=false){if(!enabled||loading||(!force&&Date.now()-lastRead<10000))return;loading=true;try{const c=await connect();let all=[],offset=0;while(true){const {data,error}=await c.from('game_results').select('run_id,first_name,last_name,branch_number,role_key,total_points,completed_at').eq('scoring_version','7.0').order('run_id').range(offset,offset+499);if(error)throw error;all.push(...data);if(data.length<500)break;offset+=500}rows=all.map(r=>({runId:r.run_id,firstName:r.first_name,lastName:r.last_name,branchNumber:r.branch_number,roleKey:r.role_key,totalPoints:r.total_points,completedAt:r.completed_at}));lastRead=Date.now();message='Live leaderboard updated. Local entries may still be pending.';if(typeof state!=='undefined'&&state.tab==='board')drawBoard()}catch(e){message='Live leaderboard unavailable: '+e.message+'. Showing local or previously loaded results.'}finally{loading=false;paint()}}
- window.addEventListener('online',()=>{flush();refresh(true)});
- setInterval(()=>{if(enabled){flush();if(typeof state!=='undefined'&&state.tab==='board')refresh(true)}},30000);
- setTimeout(()=>{if(enabled)flush()},0);
- return {queue,refresh,paint,get rows(){return rows}};
+  const GAME_VERSION='7.8',SCORING_VERSION='7.0',QUEUE='dc2027-live-pending-v1';
+  const cfg=window.SUPABASE_CONFIG||{},enabled=cfg.enabled===true;
+  let client=null,busy=false,loading=false,loaded=false,rows=[],lastRead=0,failed=false;
+  let message=enabled?'Connecting to the live leaderboard…':'Live leaderboard is not configured.';
+  const saved=new Set();
+
+  function readQueue(){try{const q=JSON.parse(localStorage.getItem(QUEUE)||'{}');return q&&typeof q==='object'?q:{}}catch{return {}}}
+  let pending=readQueue();
+  function writeQueue(){try{Object.keys(pending).length?localStorage.setItem(QUEUE,JSON.stringify(pending)):localStorage.removeItem(QUEUE)}catch{}}
+
+  function paint(){
+    const runSaved=typeof state!=='undefined'&&saved.has(state.run);
+    const s=document.getElementById('sync-status');
+    if(s)s.textContent=runSaved?'✅ Result saved to the live leaderboard.':message;
+    const a=document.getElementById('sync-actions');
+    if(a)a.hidden=runSaved||!failed;
+    const b=document.getElementById('live-board-status');
+    if(b)b.textContent=message;
+  }
+
+  async function connect(){
+    if(!enabled)throw Error('live leaderboard is not configured');
+    if(!cfg.url||!cfg.publishableKey||!window.supabase)throw Error('Supabase settings or library missing');
+    if(!client)client=window.supabase.createClient(cfg.url,cfg.publishableKey);
+    const {data,error}=await client.auth.getSession();
+    if(error)throw error;
+    if(!data.session){const r=await client.auth.signInAnonymously();if(r.error)throw r.error}
+    return client;
+  }
+
+  async function flush(){
+    if(busy||!enabled||!Object.keys(pending).length){paint();return}
+    busy=true;message='Saving your result…';paint();
+    try{
+      const c=await connect();
+      const {data:{user},error:authError}=await c.auth.getUser();
+      if(authError)throw authError;
+      for(const [id,r] of Object.entries(pending)){
+        const payload={run_id:id,user_id:user.id,first_name:r.firstName,last_name:r.lastName,branch_number:r.branchNumber,role_key:r.roleKey,total_points:r.totalPoints,accuracy:r.accuracy,completed_at:r.completedAt,game_version:GAME_VERSION,scoring_version:SCORING_VERSION};
+        const {error}=await c.from('game_results').insert(payload);
+        if(error){
+          if(error.code!=='23505')throw error; // 23505 = already saved by an earlier retry
+          const check=await c.from('game_results').select('run_id').eq('run_id',id).eq('user_id',user.id);
+          if(check.error||!check.data?.length)throw Error('duplicate run could not be verified');
+        }
+        saved.add(id);delete pending[id];writeQueue();
+      }
+      failed=false;message='Result saved to the live leaderboard.';
+      await refresh(true);
+    }catch(e){
+      failed=true;message='Could not save yet ('+(e.message||e)+'). Keep this page open — it retries automatically.';
+    }finally{busy=false;paint()}
+  }
+
+  function queue(r){
+    if(saved.has(r.runId)){paint();return}
+    if(!enabled){failed=true;message='Live leaderboard is not configured. Download a backup of your result.';paint();return}
+    pending[r.runId]=r;writeQueue();flush();
+  }
+
+  async function refresh(force=false){
+    if(!enabled){loaded=true;paint();if(typeof drawBoard==='function')drawBoard();return}
+    if(loading||(!force&&Date.now()-lastRead<10000))return;
+    loading=true;
+    try{
+      const c=await connect();let all=[],offset=0;
+      while(true){
+        const {data,error}=await c.from('game_results').select('run_id,first_name,last_name,branch_number,role_key,total_points,completed_at').eq('scoring_version',SCORING_VERSION).order('total_points',{ascending:false}).order('completed_at',{ascending:true}).range(offset,offset+499);
+        if(error)throw error;all.push(...data);if(data.length<500)break;offset+=500;
+      }
+      rows=all.map(r=>({runId:r.run_id,firstName:r.first_name,lastName:r.last_name,branchNumber:r.branch_number,roleKey:r.role_key,totalPoints:r.total_points,completedAt:r.completed_at}));
+      lastRead=Date.now();loaded=true;
+      if(!failed)message='Live leaderboard • updated '+new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});
+    }catch(e){
+      loaded=true;message='Live leaderboard unavailable ('+(e.message||e)+').';
+    }finally{
+      loading=false;
+      if(typeof state!=='undefined'&&state.tab==='board'&&typeof drawBoard==='function')drawBoard();
+      paint();
+    }
+  }
+
+  window.addEventListener('online',()=>{flush();refresh(true)});
+  setInterval(()=>{if(!enabled)return;flush();if(typeof state!=='undefined'&&state.tab==='board')refresh(true)},30000);
+  setTimeout(flush,0); // retry anything left unsent from a previous visit
+
+  return {queue,flush,refresh,paint,hasPending:()=>Object.keys(pending).length>0,get rows(){return rows},get loaded(){return loaded}};
 })();
