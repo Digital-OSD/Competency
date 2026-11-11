@@ -1,2 +1,0 @@
-// Andrew is a manually assigned arcade entry, 100 above the game maximum.
-const PUBLISHED_FINISHERS=[{"runId": "andrew-kenny-manual-entry", "firstName": "Andrew", "lastName": "Kenny", "location": "Northern CA", "role": "Digital Specialist", "roleKey": "host", "isHost": true, "participationPoints": 1100, "tags": []}];
