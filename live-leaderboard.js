@@ -16,9 +16,7 @@ const LiveBoard=(()=>{
   function paint(){
     const runSaved=typeof state!=='undefined'&&saved.has(state.run);
     const s=document.getElementById('sync-status');
-    if(s)s.textContent=runSaved?'✅ Result saved to the live leaderboard.':message;
-    const a=document.getElementById('sync-actions');
-    if(a)a.hidden=runSaved||!failed;
+    if(s)s.textContent=runSaved?'✓ Result saved':(failed?'Saving… retrying automatically. Keep this page open.':'Saving…');
     const b=document.getElementById('live-board-status');
     if(b)b.textContent=message;
   }
@@ -48,13 +46,13 @@ const LiveBoard=(()=>{
       failed=false;message='Result saved to the live leaderboard.';
       await refresh(true);
     }catch(e){
-      failed=true;message='Could not save yet ('+(e.message||e)+'). Keep this page open — it retries automatically.';
+      failed=true;console.warn('Save failed',e);message='Saving… retrying automatically.';
     }finally{busy=false;paint()}
   }
 
   function queue(run,answers){
     if(saved.has(run.runId)){paint();return}
-    if(!enabled){failed=true;message='Live leaderboard is not configured. Download a backup of your result.';paint();return}
+    if(!enabled){failed=true;message='Live leaderboard is not configured.';paint();return}
     pending[run.runId]={run,answers};writeQueue();flush();
   }
 
