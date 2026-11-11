@@ -10,3 +10,6 @@ v6.6: Only DJC, Website and SOA categories. Inside Sales SOA subcategories combi
 
 
 v6.7: Clean breaker-panel mission selector. Cleared missions flip ON and illuminate a stylized branch. Final Nice Work screen reveals the fully illuminated branch. All missions remain selectable; scoring, categories, points and exports unchanged. Illustrative game UI, not electrical operating guidance.
+
+
+v6.8: More varied approved brand red/blue/gray palette throughout. Arcade board contrast restored. Supplied actual logo used on branch sign in preview and finish screen, unchanged on white. Questions, scoring, progress and completion flow unchanged.
