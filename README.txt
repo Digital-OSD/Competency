@@ -9,3 +9,9 @@ v7.1: Removed all point-potential badges from mission panel. Integrated unchange
 
 
 v7.2: Counter Sales weights changed to DJC 10%, Website 80%, SOA 10%. Other role weights and all questions unchanged.
+
+
+v7.3: Play-page character-style role cards with electrical role symbols, descriptions, digital attribute bars showing unchanged training weights and signature moves. Journey headline updated. Attributes are role training weights, not assessments of individuals. Game content and scoring unchanged.
+
+
+v7.5: Removed the three role-description sentences from the character cards. Electrical symbols, class titles, attribute bars and signature moves unchanged.

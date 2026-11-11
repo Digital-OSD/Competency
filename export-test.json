@@ -1,0 +1,299 @@
+{
+  "schemaVersion": "6.5",
+  "contentVersion": "Question Editor v4.9",
+  "app": "Digital Competency 2027",
+  "runId": "run-1794367215265-2r24ik",
+  "participant": {
+    "firstName": "Test",
+    "lastName": "Branch",
+    "branchNumber": "001"
+  },
+  "roleKey": "counter",
+  "role": "Counter Sales",
+  "completedAt": "2026-11-11T03:20:19.094Z",
+  "mapOrder": [
+    "payment_permission",
+    "e2",
+    "w4",
+    "e1",
+    "w1",
+    "s12",
+    "shipment_status",
+    "pricing_source",
+    "payment_nav",
+    "w6",
+    "web_issue",
+    "access_form",
+    "w3",
+    "w5"
+  ],
+  "participationPoints": 630,
+  "tags": [
+    "🎉 Quest completed",
+    "🧭 Expanded map explored"
+  ],
+  "objectiveScore": 100,
+  "grade": "Proficient",
+  "gradingNote": "First-attempt weighted knowledge checks; written pitch ungraded. Participation points independent of correctness. Historical training baseline, not official certification.",
+  "weights": {
+    "Website utilization": 55,
+    "Website access": 20,
+    "SOA": 10,
+    "Digital routing": 15
+  },
+  "answers": [
+    {
+      "questionId": "w1",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 0,
+      "title": "Customer Quest",
+      "category": "Website utilization",
+      "tool": "Website"
+    },
+    {
+      "questionId": "w4",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 0,
+      "title": "Common self-service needs",
+      "category": "Website utilization",
+      "tool": "Website"
+    },
+    {
+      "questionId": "w6",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 1,
+      "title": "Commodity release challenge",
+      "category": "Website utilization",
+      "tool": "Website"
+    },
+    {
+      "questionId": "w3",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 2,
+      "title": "Website access request",
+      "category": "Website access",
+      "tool": "Website"
+    },
+    {
+      "questionId": "w5",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 1,
+      "title": "Access rescue",
+      "category": "Website access",
+      "tool": "Website"
+    },
+    {
+      "questionId": "s12",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 0,
+      "title": "Counter upload basics",
+      "category": "SOA",
+      "tool": "SOA"
+    },
+    {
+      "questionId": "e1",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 1,
+      "title": "Project handoff",
+      "category": "Digital routing",
+      "tool": "Routing"
+    },
+    {
+      "questionId": "e2",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 2,
+      "title": "Spot the digital opportunity",
+      "category": "Digital routing",
+      "tool": "Routing"
+    },
+    {
+      "questionId": "web_issue",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 0,
+      "title": "Report a website issue",
+      "category": "Website utilization",
+      "tool": "Website"
+    },
+    {
+      "questionId": "access_form",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 2,
+      "title": "Request customer access",
+      "category": "Website access",
+      "tool": "Website"
+    },
+    {
+      "questionId": "payment_nav",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 1,
+      "title": "Pay an invoice",
+      "category": "Website utilization",
+      "tool": "Website"
+    },
+    {
+      "questionId": "payment_permission",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 2,
+      "title": "Payment permissions",
+      "category": "Website access",
+      "tool": "Website"
+    },
+    {
+      "questionId": "shipment_status",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 1,
+      "title": "Active Shipments statuses",
+      "category": "Website utilization",
+      "tool": "Website"
+    },
+    {
+      "questionId": "pricing_source",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 0,
+      "title": "Where website pricing comes from",
+      "category": "Website utilization",
+      "tool": "Website"
+    }
+  ],
+  "latestAnswers": [
+    {
+      "questionId": "payment_permission",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 2
+    },
+    {
+      "questionId": "e2",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 2
+    },
+    {
+      "questionId": "w4",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 0
+    },
+    {
+      "questionId": "e1",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 1
+    },
+    {
+      "questionId": "w1",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 0
+    },
+    {
+      "questionId": "s12",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 0
+    },
+    {
+      "questionId": "shipment_status",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 1
+    },
+    {
+      "questionId": "pricing_source",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 0
+    },
+    {
+      "questionId": "payment_nav",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 1
+    },
+    {
+      "questionId": "w6",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 1
+    },
+    {
+      "questionId": "web_issue",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 0
+    },
+    {
+      "questionId": "access_form",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 2
+    },
+    {
+      "questionId": "w3",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 2
+    },
+    {
+      "questionId": "w5",
+      "type": "choice",
+      "correct": true,
+      "assisted": false,
+      "selected": 1
+    }
+  ],
+  "publicBoardRecord": {
+    "runId": "run-1794367215265-2r24ik",
+    "firstName": "Test",
+    "lastName": "Branch",
+    "branchNumber": "001",
+    "roleKey": "counter",
+    "completedAt": "2026-11-11T03:20:19.094Z",
+    "participationPoints": 630,
+    "tags": [
+      "🎉 Quest completed",
+      "🧭 Expanded map explored"
+    ]
+  }
+}
